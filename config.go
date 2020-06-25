@@ -1,4 +1,4 @@
-package main
+package vivim
 
 import "github.com/spf13/viper"
 

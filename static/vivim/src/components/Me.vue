@@ -1,3 +1,3 @@
 <template>
-  <div>It's fucking me!</div>
+  <div>Hello baby!</div>
 </template>
