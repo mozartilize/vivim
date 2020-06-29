@@ -9,18 +9,17 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-// var Config = readConfig("config", map[string]interface{}{})
-
 func CreateApp() *echo.Echo {
 	app := echo.New()
+	config := readConfig(".env", map[string]interface{}{})
 	app.Pre(middleware.AddTrailingSlash())
 
 	app.GET("/routes/", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, app.Routes())
 	})
 
-	api.Init(app)
-	graphql.Init(app)
+	api.Init(app, config)
+	graphql.Init(app, config)
 	return app
 }
 

@@ -1,8 +1,6 @@
 package main
 
-import (
-	"vivim"
-)
+import "vivim"
 
 func main() {
 	app := vivim.CreateApp()
