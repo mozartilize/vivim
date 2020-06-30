@@ -5,10 +5,13 @@ go 1.12
 require (
 	github.com/99designs/gqlgen v0.11.3
 	github.com/cosmtrek/air v1.12.1 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/go-delve/delve v1.4.1 // indirect
-	github.com/labstack/echo v3.3.10+incompatible // indirect
+	github.com/jmoiron/sqlx v1.2.0
+	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/echo/v4 v4.1.16
+	github.com/lib/pq v1.0.0
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/spf13/viper v1.6.2
 	github.com/stretchr/objx v0.2.0 // indirect

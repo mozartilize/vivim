@@ -3,6 +3,7 @@ package vivim
 import (
 	"net/http"
 	"vivim/api"
+	"vivim/db"
 	"vivim/graphql"
 
 	"github.com/labstack/echo/v4"
@@ -11,8 +12,21 @@ import (
 
 func CreateApp() *echo.Echo {
 	app := echo.New()
-	config := readConfig(".env", map[string]interface{}{})
+	config := readConfig(".env", map[string]interface{}{
+		"DATABASE_POOL_SIZE":       5,
+		"DATABASE_POOL_RECYCLE":    10 * 60,
+		"DATABASE_MAX_CONNECTIONS": 15,
+		"SECRET_KEY":               "something secret",
+	})
+
 	app.Pre(middleware.AddTrailingSlash())
+
+	app.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			c.Set("config", config)
+			return next(c)
+		}
+	})
 
 	app.GET("/routes/", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, app.Routes())
@@ -20,6 +34,15 @@ func CreateApp() *echo.Echo {
 
 	api.Init(app, config)
 	graphql.Init(app, config)
+
+	db, err := db.GetDb(config)
+	if err != nil {
+		panic(err)
+	}
+	if _, err := db.Queryx("select 1"); err != nil {
+		panic(err)
+	}
+
 	return app
 }
 
