@@ -39,8 +39,10 @@ func CreateApp() *echo.Echo {
 	if err != nil {
 		panic(err)
 	}
-	if _, err := db.Queryx("select 1"); err != nil {
+	if r, err := db.Queryx("select 1"); err != nil {
 		panic(err)
+	} else {
+		r.Close()
 	}
 
 	return app
